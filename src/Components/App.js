@@ -1,20 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header, Footer } from './Layouts/index';
 import Exercises from './Exercises/index';
-import { exercises, muscles } from '../store'
+import { exercises as exercisesInfo, muscles as musclesInfo } from '../store'
 
-class App extends React.Component {
+const App = () => {
 
-    state = {
-        muscles,
-        exercises
+    const [muscles, setMuscles] = useState(musclesInfo);
+    const [exercises, setExercises] = useState(getExerciseByMuscles());
+    const [rightPaneInfo, setRightPaneInfo] = useState({
+        title: 'Welcome',
+        description: 'This is a brand new application made for you'
+    })
+
+    useEffect(() => {
+       
+    }, [])
+
+    const setTitleAndDescription = (exercise) => {
+        setRightPaneInfo(exercise);
     }
 
-    getExerciseByMuscles() {
-        return Object.entries(this.state.exercises.reduce((exercises, exercise) => {
+    const setSpecificExercises = (muscle) => {
+        if(muscle === 'all')
+            setExercises(getExerciseByMuscles())
+        else {
+            let specificMuscle = Object.entries(exercisesInfo.reduce((exercises, exercise) => {
+                const { muscles } = exercise;
+                
+                if(muscles === muscle){
+                    exercises[muscles] = exercises[muscles]
+                    ? [exercises[muscles], exercise]
+                    : exercise;
+                }
+    
+                return exercises;
+            }, {}))
+            setExercises(specificMuscle);
+        }
+    }
+
+    function getExerciseByMuscles() {
+        return Object.entries(exercisesInfo.reduce((exercises, exercise) => {
             const { muscles } = exercise;
 
-            exercises[muscles] = exercises[muscles] 
+            exercises[muscles] = exercises[muscles]
                 ? [exercises[muscles], exercise]
                 : exercise;
 
@@ -22,19 +51,16 @@ class App extends React.Component {
         }, {}))
     }
 
-    render() {
-        const exercises = this.getExerciseByMuscles();
+    return (
+        <React.Fragment>
+            <Header muscles={muscles} />
 
-        return (
-            <React.Fragment>
-                <Header />
+            <Exercises exercises={exercises} rightPaneInfo={rightPaneInfo} setTitleAndDescription={setTitleAndDescription} />
 
-                <Exercises exercises={exercises} />
+            <Footer muscles={muscles} setSpecificExercises={setSpecificExercises} />
+        </React.Fragment>
+    );
 
-                <Footer muscles={this.state.muscles} />
-            </React.Fragment>
-          );   
-    }
 }
 
 export default App;

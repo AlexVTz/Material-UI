@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 
-export default ({muscles}) => {
+const Footer = (props) => {
+  
+  const [tab, setTab] = useState(0);
+
+  const setMuscle = (muscle, tabIndex) => {
+    setTab(tabIndex);
+    props.setSpecificExercises(muscle);
+  }
+
   return (
     <Paper>
       <Tabs
-        value ={0}
+        value ={tab}
         indicatorColor="primary"
         textColor="primary"
         centered
       >
-        <Tab label="All" />
+        <Tab label="All" onClick={() => setMuscle('all', 0)}/>
         {
-          muscles.map((muscle, i) => {
-            return <Tab key={`Tab${i}`} label={muscle} />
+          props.muscles.map((muscle, i) => {
+            return <Tab onClick={() => setMuscle(muscle, i+1)} key={`Tab${i}`} label={muscle} />
           })
         }
       </Tabs>
     </Paper>
   );
 }
+
+export default Footer;
