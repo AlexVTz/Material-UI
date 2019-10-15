@@ -47,6 +47,7 @@ const CreateDialog = (props) => {
     };
 
     const handleClose = () => {
+        props.addNewExercise(values);
         setOpen(false);
     };
 

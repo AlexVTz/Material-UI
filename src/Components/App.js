@@ -13,7 +13,7 @@ const App = () => {
     })
 
     useEffect(() => {
-       
+       console.log("M", exercises)
     }, [])
 
     const setTitleAndDescription = (exercise) => {
@@ -39,6 +39,18 @@ const App = () => {
         }
     }
 
+    const addNewExercise = ({title, muscle, description}) => {
+        console.log('add', title, muscle, description);
+        const newExercises = [...exercises];
+
+        let aux = exercises.findIndex(e => e[0] === muscle)
+        console.log('found', aux)
+        newExercises[aux][1] = [...newExercises[aux][1], {title, muscle, description}]
+        console.log('found 2', newExercises)
+        console.log('ant', exercises)
+        setExercises(newExercises);
+    }
+
     function getExerciseByMuscles() {
         return Object.entries(exercisesInfo.reduce((exercises, exercise) => {
             const { muscles } = exercise;
@@ -53,7 +65,7 @@ const App = () => {
 
     return (
         <React.Fragment>
-            <Header muscles={muscles} />
+            <Header muscles={muscles} addNewExercise={addNewExercise} />
 
             <Exercises exercises={exercises} rightPaneInfo={rightPaneInfo} setTitleAndDescription={setTitleAndDescription} />
 

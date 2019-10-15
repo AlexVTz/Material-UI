@@ -6,6 +6,7 @@ const styles = {
 }
 
 export default props => {
+    console.log("ahora", props.exercises)
     return (
         <Grid container>
             <Grid item xs={6}>

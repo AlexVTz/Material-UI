@@ -13,7 +13,7 @@ export default props => {
                 <Typography variant="h5" color="inherit" style={{flex: 1}}>
                     Exercise Database
                 </Typography>
-                <CreateExercise muscles={props.muscles} />
+                <CreateExercise muscles={props.muscles} addNewExercise={props.addNewExercise}/>
             </Toolbar>
         </AppBar>
     );
