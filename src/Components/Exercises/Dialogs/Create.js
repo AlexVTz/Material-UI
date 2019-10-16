@@ -47,7 +47,14 @@ const CreateDialog = (props) => {
     };
 
     const handleClose = () => {
-        props.addNewExercise(values);
+        if(values.title !== '' && values.muscle !== '' && values.description !== '')
+            props.addNewExercise(values);
+        
+            setValues({
+            title: '',
+            muscle: '',
+            description: ''
+        })
         setOpen(false);
     };
 

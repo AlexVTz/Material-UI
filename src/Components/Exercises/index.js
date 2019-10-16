@@ -1,12 +1,16 @@
 import React from 'react';
-import { Grid, Paper, Typography, List, ListItem, ListItemText } from '@material-ui/core';
+import {
+    Grid, Paper, Typography, List, ListItem,
+    ListItemText, ListItemSecondaryAction, IconButton
+} from '@material-ui/core';
+import { Delete as DeleteIcon } from '@material-ui/icons';
 
 const styles = {
     Paper: { padding: 20, marginTop: 10, marginBottom: 10 }
 }
 
 export default props => {
-    console.log("ahora", props.exercises)
+    console.log("alf", props.exercises)
     return (
         <Grid container>
             <Grid item xs={6}>
@@ -20,18 +24,18 @@ export default props => {
                                     </Typography>
                                     <List component="nav">
                                         {
-                                            Array.isArray(exercise) ?
-                                                exercise.map(({ title, description }, i) => {
-                                                    return (
-                                                        <ListItem button key={`Ex-button-${i}`} 
-                                                            onClick={() => props.setTitleAndDescription({title, description})}>
-                                                            <ListItemText primary={title} />
-                                                        </ListItem>)
-                                                }) :
-                                                <ListItem button onClick={() => 
-                                                    props.setTitleAndDescription({title: exercise.title, description: exercise.description})}>
-                                                    <ListItemText primary={exercise.title} />
-                                                </ListItem>
+                                            exercise.map(({id, title, description }, i) => {
+                                                return (
+                                                    <ListItem button key={`Ex-button-${i}`}
+                                                        onClick={() => props.setTitleAndDescription({ title, description })}>
+                                                        <ListItemText primary={title} />
+                                                        <ListItemSecondaryAction onClick={() => props.deleteExercise({id, group})}>
+                                                            <IconButton edge="end" aria-label="comments">
+                                                                <DeleteIcon />
+                                                            </IconButton>
+                                                        </ListItemSecondaryAction>
+                                                    </ListItem>)
+                                            })
                                         }
                                     </List>
                                 </React.Fragment>)
