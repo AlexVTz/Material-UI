@@ -3,14 +3,13 @@ import {
     Grid, Paper, Typography, List, ListItem,
     ListItemText, ListItemSecondaryAction, IconButton
 } from '@material-ui/core';
-import { Delete as DeleteIcon } from '@material-ui/icons';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 
 const styles = {
     Paper: { padding: 20, marginTop: 10, marginBottom: 10 }
 }
 
 export default props => {
-    console.log("alf", props.exercises)
     return (
         <Grid container>
             <Grid item xs={6}>
@@ -29,8 +28,13 @@ export default props => {
                                                     <ListItem button key={`Ex-button-${i}`}
                                                         onClick={() => props.setTitleAndDescription({ title, description })}>
                                                         <ListItemText primary={title} />
-                                                        <ListItemSecondaryAction onClick={() => props.deleteExercise({id, group})}>
-                                                            <IconButton edge="end" aria-label="comments">
+                                                        <ListItemSecondaryAction>
+                                                            <IconButton edge="start" aria-label="edit" 
+                                                                onClick={() => props.editExercise({id, group})}>
+                                                                <EditIcon />
+                                                            </IconButton>
+                                                            <IconButton edge="end" aria-label="delete" 
+                                                                onClick={() => props.deleteExercise({id, group})}>
                                                                 <DeleteIcon />
                                                             </IconButton>
                                                         </ListItemSecondaryAction>
