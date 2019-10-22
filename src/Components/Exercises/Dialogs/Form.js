@@ -1,40 +1,72 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles'
 import { FormControl, InputLabel, Select, TextField } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    textField: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 200,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+}));
 
 const Form = (props) => {
+
+    const classes = useStyles();
+
+    const handleChange = name => event => {
+        const form = { ...props.form };
+        form.information[name] = event.target.value;
+        props.setForm(form);
+    };
+
     return (
         <div>
             <TextField
                 id="exercise-title"
                 label="Title"
                 margin="dense"
+                value={props.form.information.title}
                 onChange={handleChange('title')}
             />
             <br></br>
-            <FormControl className={classes.formControl}>
+            {/* <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="muscle-simple">Muscle</InputLabel>
                 <Select
-                    value={values.muscle}
-                    onChange={handleSelectChange}
+                    value={props.form.information.muscles}
+                    onChange={handleChange('muscles')}
                     inputProps={{
                         name: 'muscle',
                         id: 'muscle-simple',
                     }}
                 >
-                    {muscles.map((option, i) => (
-                        <MenuItem key={"sel" + option.value + i} value={option.value}>
-                            {option.label}
+                    {props.muscles.map((option, i) => (
+                        <MenuItem key={"sel" + option + i} value={option}>
+                            {option.charAt(0).toUpperCase() + option.slice(1)}
                         </MenuItem>
                     ))}
                 </Select>
-            </FormControl>
+            </FormControl> */}
             <br></br>
             <TextField
                 id="standard-multiline-static"
                 label="Description"
+                value={props.form.information.description}
+                onChange={handleChange('description')}
                 multiline
                 rows="4"
-                defaultValue=""
                 margin="normal"
             />
         </div>

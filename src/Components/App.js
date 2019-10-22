@@ -10,6 +10,7 @@ const App = () => {
     const [form, setForm] = useState({
         show: false,
         information: {
+            id: '',
             title: '',
             muscle: '',
             description: ''
@@ -30,6 +31,7 @@ const App = () => {
 
     const setTitleAndDescription = (exercise) => {
         setRightPaneInfo(exercise);
+        setForm({...form, show: false})
     }
 
     const setSpecificExercises = (muscle) => {
@@ -90,16 +92,19 @@ const App = () => {
         let firstIndex = filteredExercises.findIndex(e => e[0] === group);
         let secondIndex = filteredExercises[firstIndex][1].findIndex(e => e.id === id && e.muscles === group);
         console.log(filteredExercises[firstIndex][1][secondIndex]);
+        console.log("N", filteredExercises);
+        setForm({...form, show: true, information: filteredExercises[firstIndex][1][secondIndex]})
     }
 
     return (
         <React.Fragment>
+            {console.log(muscles)}
             <Header muscles={muscles} addNewExercise={addNewExercise} />
 
             <Exercises exercises={exercises.selected} rightPaneInfo={rightPaneInfo} 
                 setTitleAndDescription={setTitleAndDescription} deleteExercise={deleteExercise}
-                editExercise={editExercise} />
-            <DuplicatedDialog form={form} setForm={setForm} />
+                editExercise={editExercise} form={form} setForm={setForm} muscles={muscles}/>
+            {/* <DuplicatedDialog form={form} setForm={setForm} /> */}
 
             <Footer muscles={muscles} setSpecificExercises={setSpecificExercises} />
         </React.Fragment>

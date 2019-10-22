@@ -40,7 +40,6 @@ const CreateDialog = (props) => {
     })
 
     const classes = useStyles();
-    const muscles = props.muscles.map(e => { return { value: e, label: e } })
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -99,9 +98,9 @@ const CreateDialog = (props) => {
                                 id: 'muscle-simple',
                             }}
                         >
-                            {muscles.map((option, i) => (
-                                <MenuItem key={"sel" + option.value + i} value={option.value}>
-                                    {option.label}
+                            {props.muscles.map((option, i) => (
+                                <MenuItem key={"sel" + option + i} value={option}>
+                                    {option.charAt(0).toUpperCase() + option.slice(1)}
                                 </MenuItem>
                             ))}
                         </Select>
