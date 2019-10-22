@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Header, Footer } from './Layouts/index';
 import Exercises from './Exercises/index';
 import { exercises as exercisesInfo, muscles as musclesInfo } from '../store';
-import DuplicatedDialog from './Exercises/Dialogs/Duplicated';
 
 const App = () => {
 

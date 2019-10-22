@@ -6,11 +6,15 @@ import {
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 import Form from './Dialogs/Form';
 
+import { connect } from 'react-redux'
+import store from '../../redux/store';
+import { setExercise } from '../../redux/actions/rootActions';
+
 const styles = {
     Paper: { padding: 20, marginTop: 10, marginBottom: 10 }
 }
 
-export default props => {
+const Main = props => {
     return (
         <Grid container>
             <Grid item xs={6}>
@@ -27,7 +31,7 @@ export default props => {
                                             exercise.map(({ id, title, description }, i) => {
                                                 return (
                                                     <ListItem button key={`Ex-button-${i}`}
-                                                        onClick={() => props.setTitleAndDescription({ title, description })}>
+                                                        onClick={() => props.setExercise({ title, description })}>
                                                         <ListItemText primary={title} />
                                                         <ListItemSecondaryAction>
                                                             <IconButton edge="start" aria-label="edit"
@@ -55,11 +59,11 @@ export default props => {
                     </Paper> :
                     <Paper style={styles.Paper}>
                         <Typography variant="h3" style={{ textTransform: 'capitalize' }}>
-                            {props.rightPaneInfo.title}
+                            {props.title}
                         </Typography>
                         <br></br>
                         <Typography variant="body1" style={{ textTransform: 'capitalize' }}>
-                            {props.rightPaneInfo.description}
+                            {props.description}
                         </Typography>
                     </Paper>
                 }
@@ -67,3 +71,18 @@ export default props => {
         </Grid>
     )
 }
+
+const mapStateToProps = function(state) {
+    return {
+      title: state.title,
+      description: state.description
+    }
+  }
+
+  const mapDispatchToProps = () => {
+    return {
+        setExercise
+    }
+}
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
