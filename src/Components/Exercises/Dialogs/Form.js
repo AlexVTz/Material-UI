@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { FormControl, InputLabel, Select, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { connect } from 'react-redux';
+
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
@@ -31,14 +33,14 @@ const Form = (props) => {
         form.information[name] = event.target.value;
         props.setForm(form);
     };
-
+    console.log("GUE", props.information)
     return (
         <div>
             <TextField
                 id="exercise-title"
                 label="Title"
                 margin="dense"
-                value={props.form.information.title}
+                value={props.information.title}
                 onChange={handleChange('title')}
             />
             <br></br>
@@ -63,7 +65,7 @@ const Form = (props) => {
             <TextField
                 id="standard-multiline-static"
                 label="Description"
-                value={props.form.information.description}
+                value={props.information.description}
                 onChange={handleChange('description')}
                 multiline
                 rows="4"
@@ -73,4 +75,10 @@ const Form = (props) => {
     )
 }
 
-export default Form;
+const mapStateToProps = function (state) {
+    return {
+        information: state.information
+    }
+}
+
+export default connect(mapStateToProps)(Form);

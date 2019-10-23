@@ -2,6 +2,7 @@ import { ExerciseConstans } from '../constants/constants';
 
 const initialState = {
     showWarning: false,
+    showEdit: false,
     information: {
         id: '',
         title: '',
@@ -17,7 +18,18 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case ExerciseConstans.SELECT_EXERCISE:
-            state = {...state, title: action.payload.title, description: action.payload.description}
+            return {...state, title: action.payload.title, description: action.payload.description}
+        case ExerciseConstans.SHOW_EDIT:
+            return {...state, showEdit: action.payload}
+        case ExerciseConstans.SET_EDIT_FORM:
+            return {...state, information: action.payload}
+        case ExerciseConstans.CREATE_EXERCISE:
+            return {...state, total: action.payload}
+        case ExerciseConstans.SET_TOTAL_EXERCISES:
+            return {...state, total: action.payload}
+        case ExerciseConstans.SET_SELECTED_EXERCISES:
+                console.log("PP", action.payload)
+            return {...state, selected: action.payload}
         default:
             return state
     }

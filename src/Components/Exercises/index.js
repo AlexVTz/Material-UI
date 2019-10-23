@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Grid, Paper, Typography, List, ListItem,
     ListItemText, ListItemSecondaryAction, IconButton
@@ -7,7 +7,6 @@ import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 import Form from './Dialogs/Form';
 
 import { connect } from 'react-redux'
-import store from '../../redux/store';
 import { setExercise } from '../../redux/actions/rootActions';
 
 const styles = {
@@ -15,47 +14,54 @@ const styles = {
 }
 
 const Main = props => {
+
+    useEffect(() => {
+        console.log("SEL",props.selected)
+    })
+
+    const exerciseElements = [];
+    for (const key in props.exercises) {
+        exerciseElements.push(
+            <React.Fragment key={`Ex-${key}`}>
+                <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
+                    {key}
+                </Typography>
+                <List component="nav">
+                    {
+                        props.exercises[key].map(({ id, title, description, muscles }, i) => {
+                            return (
+                                <ListItem button key={`Ex-button-${i}`}
+                                    onClick={() => props.setExercise({ title, description })}>
+                                    <ListItemText primary={title} />
+                                    <ListItemSecondaryAction>
+                                        <IconButton edge="start" aria-label="edit"
+                                            onClick={() => props.editExercise({ id, key })}>
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton edge="end" aria-label="delete"
+                                            onClick={() => props.deleteExercise({ id, key })}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </ListItemSecondaryAction>
+                                </ListItem>)
+                        })
+                    }
+                </List>
+            </React.Fragment>
+        )
+    }
+
     return (
         <Grid container>
             <Grid item xs={6}>
                 <Paper style={styles.Paper}>
-                    {
-                        props.exercises.map(([group, exercise], i) => {
-                            return (
-                                <React.Fragment key={`Ex-${i}`}>
-                                    <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
-                                        {group}
-                                    </Typography>
-                                    <List component="nav">
-                                        {
-                                            exercise.map(({ id, title, description }, i) => {
-                                                return (
-                                                    <ListItem button key={`Ex-button-${i}`}
-                                                        onClick={() => props.setExercise({ title, description })}>
-                                                        <ListItemText primary={title} />
-                                                        <ListItemSecondaryAction>
-                                                            <IconButton edge="start" aria-label="edit"
-                                                                onClick={() => props.editExercise({ id, group })}>
-                                                                <EditIcon />
-                                                            </IconButton>
-                                                            <IconButton edge="end" aria-label="delete"
-                                                                onClick={() => props.deleteExercise({ id, group })}>
-                                                                <DeleteIcon />
-                                                            </IconButton>
-                                                        </ListItemSecondaryAction>
-                                                    </ListItem>)
-                                            })
-                                        }
-                                    </List>
-                                </React.Fragment>)
-                        })
-                    }
+                    { exerciseElements}
                 </Paper>
             </Grid>
             <Grid item xs={6}>
-                {props.form.show ?
+                {props.showEdit ?
                     <Paper style={styles.Paper}>
-                        <Form form={props.form} setForm={props.setForm} muscles={props.muscles}/>
+                        <Form form={props.information} setForm={props.setForm} muscles={props.muscles} />
                     </Paper> :
                     <Paper style={styles.Paper}>
                         <Typography variant="h3" style={{ textTransform: 'capitalize' }}>
@@ -72,17 +78,19 @@ const Main = props => {
     )
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
     return {
-      title: state.title,
-      description: state.description
+        title: state.title,
+        description: state.description,
+        showEdit: state.showEdit,
+        selected: state.selected
     }
-  }
+}
 
-  const mapDispatchToProps = () => {
+const mapDispatchToProps = () => {
     return {
         setExercise
     }
 }
-  
+
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

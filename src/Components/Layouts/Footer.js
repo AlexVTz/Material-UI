@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 
 const Footer = (props) => {
@@ -27,6 +28,16 @@ const Footer = (props) => {
       </Tabs>
     </Paper>
   );
+}
+
+const mapStateToProps = function(state) {
+  return {
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+  }
 }
 
 export default Footer;
