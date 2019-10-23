@@ -7,7 +7,7 @@ import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 import Form from './Dialogs/Form';
 
 import { connect } from 'react-redux'
-import { setExercise } from '../../redux/actions/rootActions';
+import { setExercise, deleteExercise } from '../../redux/actions/rootActions';
 
 const styles = {
     Paper: { padding: 20, marginTop: 10, marginBottom: 10 }
@@ -19,8 +19,21 @@ const Main = props => {
         console.log("SEL",props.selected)
     })
 
+    const deleteExercise = ({id, key}) => {
+        let filteredExercises = {...props.total};
+        for (let muscle in filteredExercises){
+            if(muscle === key){
+                filteredExercises[muscle] = filteredExercises[muscle].filter(exercise => {
+                    return  exercise.id !== id;
+                });
+                break;
+            }
+        }
+        props.deleteExercise(filteredExercises)
+    }
+
     const exerciseElements = [];
-    for (const key in props.exercises) {
+    for (const key in props.selected) {
         exerciseElements.push(
             <React.Fragment key={`Ex-${key}`}>
                 <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
@@ -28,7 +41,7 @@ const Main = props => {
                 </Typography>
                 <List component="nav">
                     {
-                        props.exercises[key].map(({ id, title, description, muscles }, i) => {
+                        props.selected[key].map(({ id, title, description, muscles }, i) => {
                             return (
                                 <ListItem button key={`Ex-button-${i}`}
                                     onClick={() => props.setExercise({ title, description })}>
@@ -39,7 +52,7 @@ const Main = props => {
                                             <EditIcon />
                                         </IconButton>
                                         <IconButton edge="end" aria-label="delete"
-                                            onClick={() => props.deleteExercise({ id, key })}>
+                                            onClick={() => deleteExercise({ id, key })}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </ListItemSecondaryAction>
@@ -83,13 +96,15 @@ const mapStateToProps = function (state) {
         title: state.title,
         description: state.description,
         showEdit: state.showEdit,
-        selected: state.selected
+        selected: state.selected,
+        total: state.total
     }
 }
 
 const mapDispatchToProps = () => {
     return {
-        setExercise
+        setExercise,
+        deleteExercise
     }
 }
 

@@ -28,8 +28,9 @@ const rootReducer = (state = initialState, action) => {
         case ExerciseConstans.SET_TOTAL_EXERCISES:
             return {...state, total: action.payload}
         case ExerciseConstans.SET_SELECTED_EXERCISES:
-                console.log("PP", action.payload)
             return {...state, selected: action.payload}
+        case ExerciseConstans.DELETE_EXERCISE:
+            return {...state, total: action.payload, selected: action.payload}
         default:
             return state
     }

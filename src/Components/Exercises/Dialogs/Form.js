@@ -4,6 +4,7 @@ import { FormControl, InputLabel, Select, TextField } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { connect } from 'react-redux';
+import { setEditForm } from '../../../redux/actions/rootActions'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,11 +30,10 @@ const Form = (props) => {
     const classes = useStyles();
 
     const handleChange = name => event => {
-        const form = { ...props.form };
-        form.information[name] = event.target.value;
-        props.setForm(form);
+        const form = { ...props.information };
+        form[name] = event.target.value;
+        setEditForm(form);
     };
-    console.log("GUE", props.information)
     return (
         <div>
             <TextField
