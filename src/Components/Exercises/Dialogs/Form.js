@@ -99,7 +99,8 @@ const Form = (props) => {
 const mapStateToProps = function (state) {
     return {
         total: state.total,
-        information: state.information
+        information: state.information,
+        muscles: state.muscles
     }
 }
 

@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
+import { connect } from 'react-redux'
 import {
     Grid, Paper, Typography, List, ListItem,
     ListItemText, ListItemSecondaryAction, IconButton
 } from '@material-ui/core';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
-import Form from './Dialogs/Form';
-
-import { connect } from 'react-redux'
+import ShowPane from './ShowPane/ShowPane';
 import { setExercise, deleteExercise, setEditForm } from '../../redux/actions/rootActions';
 
 const styles = {
@@ -81,37 +80,19 @@ const Main = props => {
         <Grid container>
             <Grid item xs={6}>
                 <Paper style={styles.Paper}>
+                    {console.log("SEL1")}
                     { exerciseElements}
                 </Paper>
             </Grid>
-            <Grid item xs={6}>
-                {props.showEdit ?
-                    <Paper style={styles.Paper}>
-                        <Form form={props.information} setForm={props.setForm} muscles={props.muscles} />
-                    </Paper> :
-                    <Paper style={styles.Paper}>
-                        <Typography variant="h3" style={{ textTransform: 'capitalize' }}>
-                            {props.title}
-                        </Typography>
-                        <br></br>
-                        <Typography variant="body1" style={{ textTransform: 'capitalize' }}>
-                            {props.description}
-                        </Typography>
-                    </Paper>
-                }
-            </Grid>
+            <ShowPane />
         </Grid>
     )
 }
 
 const mapStateToProps = function (state) {
     return {
-        title: state.title,
-        description: state.description,
-        showEdit: state.showEdit,
         selected: state.selected,
-        total: state.total,
-        muscles: state.muscles
+        total: state.total
     }
 }
 
@@ -123,4 +104,4 @@ const mapDispatchToProps = () => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(Main));
