@@ -62,7 +62,6 @@ const CreateDialog = (props) => {
     };
 
     const handleSelectChange = event => {
-        console.log(event.target.value)
         setValues(oldValues => ({
             ...oldValues,
             [event.target.name]: event.target.value,

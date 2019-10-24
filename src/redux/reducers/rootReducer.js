@@ -8,7 +8,9 @@ const initialState = {
         id: '',
         title: '',
         muscle: '',
-        description: ''
+        description: '',
+        index: -1,
+        oldMuscle: ''
     },
     total: {},
     selected: {},

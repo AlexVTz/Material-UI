@@ -36,10 +36,10 @@ export const createNewExercise = (info) => {
     })
 }
 
-export const setEditForm = (information) => {
+export const setEditForm = (information, i = information.index , oldMuscle = information.oldMuscle) => {
     store.dispatch({
         type: ExerciseConstans.SET_EDIT_FORM,
-        payload: information
+        payload: {...information, index: i, oldMuscle}
     })
     showEdit(true);
 }

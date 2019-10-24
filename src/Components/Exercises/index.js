@@ -16,7 +16,7 @@ const styles = {
 const Main = props => {
 
     useEffect(() => {
-        //console.log("SEL",props.selected)
+        console.log("SEL")
     })
 
     const deleteExercise = ({id, key}) => {
@@ -32,8 +32,9 @@ const Main = props => {
         props.deleteExercise(filteredExercises)
     }
 
-    const editExercise = ({id, key}) => {
+    const editExercise = ({id, key, i}) => {
         let filteredExercises = {...props.total};
+        console.log(filteredExercises);
         let found;
         for (let muscle in filteredExercises){
             if(muscle === key){
@@ -41,7 +42,7 @@ const Main = props => {
                 break;
             }
         }
-        props.setEditForm(found);
+        props.setEditForm(found, i, found.muscles);
     }
 
     const exerciseElements = [];
@@ -53,14 +54,14 @@ const Main = props => {
                 </Typography>
                 <List component="nav">
                     {
-                        props.selected[key].map(({ id, title, description, muscles }, i) => {
+                        props.selected[key].map(({ id, title, description }, i) => {
                             return (
                                 <ListItem button key={`Ex-button-${i}`}
                                     onClick={() => props.setExercise({ title, description })}>
                                     <ListItemText primary={title} />
                                     <ListItemSecondaryAction>
                                         <IconButton edge="start" aria-label="edit"
-                                            onClick={() => editExercise({ id, key })}>
+                                            onClick={() => editExercise({ id, key, i })}>
                                             <EditIcon />
                                         </IconButton>
                                         <IconButton edge="end" aria-label="delete"
