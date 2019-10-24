@@ -17,6 +17,13 @@ export const setExercise = ({ title, description }) => {
     showEdit();
 }
 
+export const setMuscles = (muscles) => {
+    store.dispatch({
+        type: ExerciseConstans.SET_MUSCLES,
+        payload: muscles
+    })
+}
+
 export const createNewExercise = (info) => {
     store.dispatch({
         type: ExerciseConstans.SET_SELECTED_EXERCISES,

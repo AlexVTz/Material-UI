@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
     Grid, Paper, Typography, List, ListItem,
     ListItemText, ListItemSecondaryAction, IconButton
@@ -7,7 +7,7 @@ import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 import Form from './Dialogs/Form';
 
 import { connect } from 'react-redux'
-import { setExercise, deleteExercise } from '../../redux/actions/rootActions';
+import { setExercise, deleteExercise, setEditForm } from '../../redux/actions/rootActions';
 
 const styles = {
     Paper: { padding: 20, marginTop: 10, marginBottom: 10 }
@@ -16,7 +16,7 @@ const styles = {
 const Main = props => {
 
     useEffect(() => {
-        console.log("SEL",props.selected)
+        //console.log("SEL",props.selected)
     })
 
     const deleteExercise = ({id, key}) => {
@@ -30,6 +30,18 @@ const Main = props => {
             }
         }
         props.deleteExercise(filteredExercises)
+    }
+
+    const editExercise = ({id, key}) => {
+        let filteredExercises = {...props.total};
+        let found;
+        for (let muscle in filteredExercises){
+            if(muscle === key){
+                found = filteredExercises[muscle].find(exercise => exercise.id === id);
+                break;
+            }
+        }
+        props.setEditForm(found);
     }
 
     const exerciseElements = [];
@@ -48,7 +60,7 @@ const Main = props => {
                                     <ListItemText primary={title} />
                                     <ListItemSecondaryAction>
                                         <IconButton edge="start" aria-label="edit"
-                                            onClick={() => props.editExercise({ id, key })}>
+                                            onClick={() => editExercise({ id, key })}>
                                             <EditIcon />
                                         </IconButton>
                                         <IconButton edge="end" aria-label="delete"
@@ -97,14 +109,16 @@ const mapStateToProps = function (state) {
         description: state.description,
         showEdit: state.showEdit,
         selected: state.selected,
-        total: state.total
+        total: state.total,
+        muscles: state.muscles
     }
 }
 
 const mapDispatchToProps = () => {
     return {
         setExercise,
-        deleteExercise
+        deleteExercise,
+        setEditForm
     }
 }
 

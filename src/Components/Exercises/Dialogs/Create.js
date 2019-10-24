@@ -35,7 +35,7 @@ const CreateDialog = (props) => {
     const [open, setOpen] = useState(false);
     const [values, setValues] = useState({
         title: '',
-        muscle: '',
+        muscles: '',
         description: ''
     })
 
@@ -51,7 +51,7 @@ const CreateDialog = (props) => {
         
             setValues({
             title: '',
-            muscle: '',
+            muscles: '',
             description: ''
         })
         setOpen(false);
@@ -87,14 +87,13 @@ const CreateDialog = (props) => {
                         onChange={handleChange('title')}
                     />
                     <br></br>
-                    {console.log(values.muscle)}
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="muscle-simple">Muscle</InputLabel>
                         <Select
-                            value={values.muscle}
+                            value={values.muscles}
                             onChange={handleSelectChange}
                             inputProps={{
-                                name: 'muscle',
+                                name: 'muscles',
                                 id: 'muscle-simple',
                             }}
                         >

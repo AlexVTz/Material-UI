@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Paper, Tabs, Tab } from '@material-ui/core';
+import { setExercises, setSelectedExercises } from '../../redux/actions/rootActions'
 
 const Footer = (props) => {
   
@@ -8,8 +9,24 @@ const Footer = (props) => {
 
   const setMuscle = (muscle, tabIndex) => {
     setTab(tabIndex);
-    props.setSpecificExercises(muscle);
+    setSpecificExercises(muscle);
   }
+
+  const setSpecificExercises = (muscle) => {
+    if(muscle === 'all')
+        setExercises(props.total)
+    else {
+        let filteredExercises = {...props.total};
+        let specificMuscle = {};
+        for (let exercise in filteredExercises){
+            if(exercise === muscle){
+                specificMuscle[exercise] = filteredExercises[exercise];
+                break;
+            }
+        }
+        setSelectedExercises(specificMuscle);
+    }
+}
 
   return (
     <Paper>
@@ -32,12 +49,16 @@ const Footer = (props) => {
 
 const mapStateToProps = function(state) {
   return {
+    total: state.total,
+    muscles: state.muscles
   }
 }
 
 const mapDispatchToProps = () => {
   return {
+    setExercises,
+    setSelectedExercises
   }
 }
 
-export default Footer;
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

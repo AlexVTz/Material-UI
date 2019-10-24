@@ -11,16 +11,16 @@ import { validateExistance } from '../Utils/index';
 
 const Header = props => {
 
-    const addNewExercise = ({title, muscle, description, id}) => {
+    const addNewExercise = ({title, muscles, description, id}) => {
         id = title.replace(/\s/g,"-").toLowerCase();
-        let existance = validateExistance(title, muscle, props.total)
+        let existance = validateExistance(title, muscles, props.total)
         if(existance){
             //setForm({...form, show: true});
             return;
         }
         const newExercises = {...props.total};
-        console.log("MOM",newExercises[muscle])
-        newExercises[muscle].push({title, muscle, description, id})
+        console.log("MOM",newExercises[muscles])
+        newExercises[muscles].push({title, muscles, description, id})
         props.createNewExercise(newExercises);
     }
 
@@ -38,7 +38,8 @@ const Header = props => {
 
 const mapStateToProps = function (state) {
     return {
-        total: state.total
+        total: state.total,
+        muscles: state.muscles
     }
 }
 

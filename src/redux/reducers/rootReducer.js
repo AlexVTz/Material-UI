@@ -3,6 +3,7 @@ import { ExerciseConstans } from '../constants/constants';
 const initialState = {
     showWarning: false,
     showEdit: false,
+    muscles: [],
     information: {
         id: '',
         title: '',
@@ -17,6 +18,8 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ExerciseConstans.SET_MUSCLES:
+            return {...state, muscles: action.payload}
         case ExerciseConstans.SELECT_EXERCISE:
             return {...state, title: action.payload.title, description: action.payload.description}
         case ExerciseConstans.SHOW_EDIT:

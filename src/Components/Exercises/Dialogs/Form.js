@@ -44,10 +44,10 @@ const Form = (props) => {
                 onChange={handleChange('title')}
             />
             <br></br>
-            {/* <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="muscle-simple">Muscle</InputLabel>
                 <Select
-                    value={props.form.information.muscles}
+                    value={props.information.muscles}
                     onChange={handleChange('muscles')}
                     inputProps={{
                         name: 'muscle',
@@ -60,7 +60,7 @@ const Form = (props) => {
                         </MenuItem>
                     ))}
                 </Select>
-            </FormControl> */}
+            </FormControl>
             <br></br>
             <TextField
                 id="standard-multiline-static"
