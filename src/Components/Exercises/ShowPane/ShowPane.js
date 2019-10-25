@@ -1,16 +1,16 @@
 import React from 'react';
-import { Grid, Paper, Typography } from '@material-ui/core';
+import { Grid, Paper, Typography, Box } from '@material-ui/core';
 import { connect } from 'react-redux';
 import Form from '../Dialogs/Form';
 
 const styles = {
-    Paper: { padding: 20, marginTop: 10, marginBottom: 10 }
+    Paper: { padding: 20, marginTop: 10, marginBottom: 10, flexGrow: 1 }
 }
 
 const ShowPane = (props) => {
 
     return (
-        <Grid item xs={6}>
+        <Grid item xs={6} style={{display: 'flex', alignItems: 'stretch' }} >
             {props.showEdit ?
                 <Paper style={styles.Paper}>
                     <Form form={props.information} />

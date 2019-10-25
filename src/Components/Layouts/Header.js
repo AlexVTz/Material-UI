@@ -25,7 +25,7 @@ const Header = props => {
     }
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{flex: '0 1 auto'}}>
             <Toolbar>
                 <Typography variant="h5" color="inherit" style={{flex: 1}}>
                     Exercise Database

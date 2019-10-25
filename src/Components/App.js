@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Header, Footer } from './Layouts/index';
 import Exercises from './Exercises/index';
 import { exercises as exercisesInfo, muscles as musclesInfo } from '../store';
-import { setExercises, setMuscles }from '../redux/actions/rootActions';
+import { setExercises, setMuscles } from '../redux/actions/rootActions';
 
 const App = () => {
 
@@ -25,12 +25,14 @@ const App = () => {
 
     return (
         <React.Fragment>
-            <Header />
+            <div style={{ display: 'flex', flexFlow: 'column', height: '100%' }}>
+                <Header />
 
-            <Exercises />
-            {/* <DuplicatedDialog form={form} setForm={setForm} /> */}
+                <Exercises />
+                {/* <DuplicatedDialog form={form} setForm={setForm} /> */}
 
-            <Footer />
+                <Footer />
+            </div>
         </React.Fragment>
     );
 

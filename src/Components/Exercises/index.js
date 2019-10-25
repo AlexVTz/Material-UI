@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import {
     Grid, Paper, Typography, List, ListItem,
@@ -9,7 +9,7 @@ import ShowPane from './ShowPane/ShowPane';
 import { setExercise, deleteExercise, setEditForm } from '../../redux/actions/rootActions';
 
 const styles = {
-    Paper: { padding: 20, marginTop: 10, marginBottom: 10 }
+    Paper: { padding: 20, marginTop: 10, marginBottom: 10, overflow: 'auto', height: 'calc(100vh - 180px)' }
 }
 
 const Main = props => {
@@ -77,7 +77,7 @@ const Main = props => {
     }
 
     return (
-        <Grid container>
+        <Grid container style={{flex: '1 1 auto'}}>
             <Grid item xs={6}>
                 <Paper style={styles.Paper}>
                     {console.log("SEL1")}
@@ -104,4 +104,4 @@ const mapDispatchToProps = () => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(memo(Main));
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
